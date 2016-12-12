@@ -5,7 +5,9 @@
  ******************************************************************************/
 package forestry.api.core;
 
+import com.bioxx.tfc.Core.TFC_Climate;
 import net.minecraft.util.IIcon;
+import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 
 import cpw.mods.fml.relauncher.Side;
@@ -44,22 +46,39 @@ public enum EnumTemperature {
 	 * @param rawTemp raw temperature value
 	 * @return EnumTemperature corresponding to value of rawTemp
 	 */
-	public static EnumTemperature getFromValue(float rawTemp) {
-		if (rawTemp > 1.00f) {
+	public static EnumTemperature getFromValue(float rawTemp)
+	{
+		if (rawTemp > 40f) {
+			return HELLISH;
+		}
+		else if (rawTemp > 30f) {
 			return HOT;
 		}
-		else if (rawTemp > 0.85f) {
+		else if (rawTemp > 20f) {
 			return WARM;
 		}
-		else if (rawTemp > 0.35f) {
+		else if (rawTemp > 5f) {
 			return NORMAL;
 		}
-		else if (rawTemp > 0.0f) {
+		else if (rawTemp > 0f) {
 			return COLD;
 		}
 		else {
 			return ICY;
 		}
+	}
+
+	public static EnumTemperature getFromCoord(World world, int x, int y, int z)
+	{
+		return getFromValue(TFC_Climate.getHeightAdjustedTemp(world, x, y, z));
+	}
+
+	public static EnumTemperature getFromChunkCoord(World world, int x, int y, int z)
+	{
+		int i = x * 16, j = y, k = z * 16;
+
+			return getFromValue(TFC_Climate.getHeightAdjustedTemp(world, i, j, k));
+
 	}
 
 	public static EnumTemperature getFromBiome(BiomeGenBase biomeGenBase) {

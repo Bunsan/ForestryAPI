@@ -30,10 +30,10 @@ public enum EnumHumidity {
 	 * @return EnumHumidity corresponding to rainfall value
 	 */
 	public static EnumHumidity getFromValue(float rawHumidity) {
-		if (rawHumidity > 0.85f) { // matches BiomeGenBase.isHighHumidity()
+		if (rawHumidity > 2000f) { // matches BiomeGenBase.isHighHumidity()
 			return DAMP;
 		}
-		else if (rawHumidity >= 0.3f) {
+		else if (rawHumidity > 250f) {
 			return NORMAL;
 		}
 		else {
